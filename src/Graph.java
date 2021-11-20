@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Iterator;
 
 public abstract class Graph {
@@ -9,9 +10,17 @@ public abstract class Graph {
 	public abstract Double getEdge(int from, int to);
 
 	public abstract Iterator<Node> getAdjacentsIterator(int node);
+	
+	public int[] predecesors;
+	
 
 	// ----------------------------------------------------
 	// Algorithm's implementations
+
+	@Override
+	public String toString() {
+		return "Graph [predecesors=" + Arrays.toString(predecesors) + "]";
+	}
 
 	public int[] bfs(int source) {
 		int[] hoops = new int[getNodes()];
@@ -30,12 +39,12 @@ public abstract class Graph {
 
 	public double[] Dijkstra(int source) {
 		double[] distances = new double[getNodes()];
-		double[] predecesors = new double[getNodes()];
+		predecesors = new int[getNodes()];
 		boolean[] visited = new boolean[getNodes()];
 
 		for (int i = 0; i < getNodes(); i++) {
 			distances[i] = Integer.MAX_VALUE;
-			predecesors[i] = 0;
+			predecesors[i] = -1;
 			visited[i] = false;
 		}
 
@@ -51,11 +60,12 @@ public abstract class Graph {
 				if (!visited[v] && getEdge(u, v) != null && distances[u] != Integer.MAX_VALUE
 						&& distances[u] + getEdge(u, v) < distances[v]) {
 					distances[v] = distances[u] + getEdge(u, v);
+					predecesors[v] = u;
 				}
-
+				
 			}
 		}
-
+		
 		return distances;
 	}
 
