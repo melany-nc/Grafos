@@ -46,5 +46,14 @@ class Node {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Node [to=" + to + ", from=" + from + ", cost=" + cost + "]";
+	}
+	
+	
 	
 }

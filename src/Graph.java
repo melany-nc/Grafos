@@ -10,9 +10,8 @@ public abstract class Graph {
 	public abstract Double getEdge(int from, int to);
 
 	public abstract Iterator<Node> getAdjacentsIterator(int node);
-	
+
 	public int[] predecesors;
-	
 
 	// ----------------------------------------------------
 	// Algorithm's implementations
@@ -36,6 +35,8 @@ public abstract class Graph {
 		// TODO: Implement me!
 
 	}
+
+	// DISTANCIA MINIMA ENTRE UN NODO Y EL RESTO //
 
 	public double[] Dijkstra(int source) {
 		double[] distances = new double[getNodes()];
@@ -62,10 +63,10 @@ public abstract class Graph {
 					distances[v] = distances[u] + getEdge(u, v);
 					predecesors[v] = u;
 				}
-				
+
 			}
 		}
-		
+
 		return distances;
 	}
 
@@ -80,6 +81,66 @@ public abstract class Graph {
 			}
 
 		return min_index;
+	}
+
+	// DISTANCIA MINIMA ENTRE TODOS LOS NODOS - GRAFO PONDERADO //
+
+	public double[][] floyd() {
+		double[][] f0 = new double[getNodes()][getNodes()];
+
+		for (int i = 0; i < f0.length; i++) {
+			for (int j = 0; j < f0[i].length; j++) {
+				if (this.getEdge(i, j) == null) {
+					f0[i][j] = Integer.MAX_VALUE;
+					if (i == j)
+						f0[i][j] = 0;
+				} else {
+					f0[i][j] = this.getEdge(i, j);
+				}
+			}
+		}
+
+		for (int count = 0; count < getNodes(); count++) {
+			for (int i = 0; i < f0.length; i++) {
+				for (int j = 0; j < f0.length; j++) {
+					if (i != count && j != count && i != j) {
+						if (f0[i][count] + f0[count][j] < f0[i][j]) {
+							f0[i][j] = f0[i][count] + f0[count][j];
+						}
+					}
+				}
+			}
+		}
+		return f0;
+	}
+
+	// DISTANCIA MINIMA ENTRE TODOS LOS NODOS - GRAFO NO PONDERADO //
+
+	public boolean[][] warshall() {
+		boolean[][] f0 = new boolean[getNodes()][getNodes()];
+
+		for (int i = 0; i < f0.length; i++) {
+			for (int j = 0; j < f0[i].length; j++) {
+				if (this.getEdge(i, j) == null) {
+					f0[i][j] = false;
+				} else {
+					f0[i][j] = true;
+				}
+			}
+		}
+
+		for (int count = 0; count < getNodes(); count++) {
+			for (int i = 0; i < f0.length; i++) {
+				for (int j = 0; j < f0.length; j++) {
+					if (i != count && j != count && i != j) {
+						if ((f0[i][count] && f0[count][j]) || f0[i][j]) {
+							f0[i][j] = true;
+						}
+					}
+				}
+			}
+		}
+		return f0;
 	}
 
 }
