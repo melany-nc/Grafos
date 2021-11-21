@@ -2,13 +2,15 @@
 
 Grafos implementados con Listas
 
-# Metodos implementados
+# Algoritmos implementados
 
 ☻ Dijkstra
 ☻ Floyd
 ☻ Warshall
+☻ BFS
+☻ DFS
 
-# Metodos a implementar
+# Algoritmos a implementar
 
 ☺ Prim
 ☺ Kruskal
