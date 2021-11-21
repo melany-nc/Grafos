@@ -1,5 +1,9 @@
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Stack;
 
 public abstract class Graph {
 
@@ -20,19 +24,62 @@ public abstract class Graph {
 	public String toString() {
 		return "Graph [predecesors=" + Arrays.toString(predecesors) + "]";
 	}
+	
+	// ALGORITMO BFS CON SALTOS //
 
 	public int[] bfs(int source) {
 		int[] hoops = new int[getNodes()];
+		Queue<Integer> c = new LinkedList<Integer>();
+		
+		for (int i = 0; i < hoops.length; i++) {
+			hoops[i] = Integer.MAX_VALUE;
+		}
+		
 		hoops[source] = 0;
-
-		// TODO: Implement me!
-
+		c.add(source);
+		
+		while(!c.isEmpty()) {
+			Integer current = c.poll();
+			System.out.println(current);
+			Iterator<Node> it = this.getAdjacentsIterator(current);
+			
+			while(it.hasNext()) {
+				Node node = it.next();
+				
+				if(hoops[node.to] == Integer.MAX_VALUE) {
+					hoops[node.to] = hoops[current] + 1;
+					c.add(node.to);
+				}
+				
+			}
+			
+		}
+		
 		return hoops;
 	}
+	
+	// ALGORITMO DFS //
 
 	public void dfs(int source) {
+		boolean[] visited = new boolean[this.getNodes()];
+		Stack<Integer> p = new Stack<Integer>();
 
-		// TODO: Implement me!
+		p.add(source);
+		visited[source] = true;
+
+		while (!p.isEmpty()) {
+			Integer current = p.pop();
+			System.out.println(current);
+			Iterator<Node> it = this.getAdjacentsIterator(current);
+			
+			while (it.hasNext()) {
+				Node node = it.next();
+				if (!visited[node.to]) {					 
+					p.push(node.to);
+					visited[node.to] = true;
+				}
+			}
+		}
 
 	}
 
