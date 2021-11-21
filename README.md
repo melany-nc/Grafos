@@ -5,9 +5,10 @@ Grafos implementados con Listas
 # Metodos implementados
 
 ☻ Dijkstra
+☻ Floyd
+☻ Warshall
 
 # Metodos a implementar
 
-☺ Floyd
 ☺ Prim
 ☺ Kruskal
