@@ -1,4 +1,6 @@
+package graph;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -24,40 +26,40 @@ public abstract class Graph {
 	public String toString() {
 		return "Graph [predecesors=" + Arrays.toString(predecesors) + "]";
 	}
-	
+
 	// ALGORITMO BFS CON SALTOS //
 
 	public int[] bfs(int source) {
 		int[] hoops = new int[getNodes()];
 		Queue<Integer> c = new LinkedList<Integer>();
-		
+
 		for (int i = 0; i < hoops.length; i++) {
 			hoops[i] = Integer.MAX_VALUE;
 		}
-		
+
 		hoops[source] = 0;
 		c.add(source);
-		
-		while(!c.isEmpty()) {
+
+		while (!c.isEmpty()) {
 			Integer current = c.poll();
 			System.out.println(current);
 			Iterator<Node> it = this.getAdjacentsIterator(current);
-			
-			while(it.hasNext()) {
+
+			while (it.hasNext()) {
 				Node node = it.next();
-				
-				if(hoops[node.to] == Integer.MAX_VALUE) {
+
+				if (hoops[node.to] == Integer.MAX_VALUE) {
 					hoops[node.to] = hoops[current] + 1;
 					c.add(node.to);
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		return hoops;
 	}
-	
+
 	// ALGORITMO DFS //
 
 	public void dfs(int source) {
@@ -71,10 +73,10 @@ public abstract class Graph {
 			Integer current = p.pop();
 			System.out.println(current);
 			Iterator<Node> it = this.getAdjacentsIterator(current);
-			
+
 			while (it.hasNext()) {
 				Node node = it.next();
-				if (!visited[node.to]) {					 
+				if (!visited[node.to]) {
 					p.push(node.to);
 					visited[node.to] = true;
 				}
@@ -83,7 +85,7 @@ public abstract class Graph {
 
 	}
 
-	// DISTANCIA MINIMA ENTRE UN NODO Y EL RESTO //
+	// DISTANCIA MINIMA ENTRE UN NODO Y EL RESTO - DIJKSTRA //
 
 	public double[] Dijkstra(int source) {
 		double[] distances = new double[getNodes()];
@@ -130,7 +132,7 @@ public abstract class Graph {
 		return min_index;
 	}
 
-	// DISTANCIA MINIMA ENTRE TODOS LOS NODOS - GRAFO PONDERADO //
+	// DISTANCIA MINIMA ENTRE TODOS LOS NODOS - GRAFO PONDERADO - FLOYD //
 
 	public double[][] floyd() {
 		double[][] f0 = new double[getNodes()][getNodes()];
@@ -161,7 +163,7 @@ public abstract class Graph {
 		return f0;
 	}
 
-	// DISTANCIA MINIMA ENTRE TODOS LOS NODOS - GRAFO NO PONDERADO //
+	// DISTANCIA MINIMA ENTRE TODOS LOS NODOS - GRAFO NO PONDERADO - WARSHALL//
 
 	public boolean[][] warshall() {
 		boolean[][] f0 = new boolean[getNodes()][getNodes()];
@@ -189,5 +191,46 @@ public abstract class Graph {
 		}
 		return f0;
 	}
+
+	// ARBOL DE COSTO MINIMO DE UN GRAFO - PRIM //
+
+	public int prim() {
+		boolean[] visited = new boolean[getNodes()];
+		int cost = 0;
+
+		Comparator<Node> NodeComparator = (obj1, obj2) -> {
+			return (int) (obj1.cost - obj2.cost);
+		};
+
+		PriorityQueue<Node> c = new PriorityQueue<Node>(NodeComparator); // COLA PARA PESO DE ARISTAS DEL NODO
+
+		c.add(new Node(0, 0, 0)); // Empiezo del nodo 0
+
+		while (!c.isEmpty()) { // O(A)
+			Node current = c.peek();
+			c.remove();
+
+			int node = current.to;
+			double nCost = current.cost;
+
+			if (!visited[node]) {
+				System.out.println(current);
+				cost += nCost;
+				visited[node] = true;
+
+				Iterator<Node> it = this.getAdjacentsIterator(node); // O(1)
+				while (it.hasNext()) { // O(A)
+					Node n = it.next(); // O(1)
+					c.add(n); // O(log(N))
+				}
+
+			}
+
+		}
+
+		return cost;
+	}
+
+	public abstract int getDegree(int i);
 
 }

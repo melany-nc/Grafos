@@ -1,3 +1,4 @@
+package graph;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ListGraph extends Graph {
 				return;
 			}
 		}
-		graph[from].add(new Node(to, from, cost));
+		graph[from].add(new Node(from, to, cost));
 	}
 
 	@Override
@@ -38,8 +39,7 @@ public class ListGraph extends Graph {
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public Iterator<Node> getAdjacentsIterator(int node) {
 		return graph[node].iterator();
@@ -48,18 +48,23 @@ public class ListGraph extends Graph {
 	@Override
 	public String toString() {
 		String s = "";
-		
+
 		for (int i = 0; i < graph.length; i++) {
-			s += "Nodo " + (i+1) + "\n"; 
-			for (int j = 0; j < graph[i].size() ; j++) {
-				s += graph[i].get(j).from + " " + graph[i].get(j).to + " " + graph[i].get(j).cost +  "\n";
+			s += "Nodo " + (i + 1) + "\n";
+			for (int j = 0; j < graph[i].size(); j++) {
+				s += graph[i].get(j).from + " " + graph[i].get(j).to + " " + graph[i].get(j).cost + "\n";
 			}
 		}
-		
+
 		return s;
 	}
 
-	
-	
-	
+	@Override
+	public int getDegree(int pos) {
+		
+		
+		
+		return 0;
+	}
+
 }
