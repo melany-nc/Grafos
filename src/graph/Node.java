@@ -1,9 +1,13 @@
 package graph;
+
+import java.util.Iterator;
+
 public class Node {
 
 	public int to;
 	public int from;
 	public double cost;
+	
 
 	public Node(int from, int to,  double cost) {
 		this.to = to;

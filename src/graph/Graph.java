@@ -231,6 +231,15 @@ public abstract class Graph {
 		return cost;
 	}
 
-	public abstract int getDegree(int i);
+	public int getDegree(int i) {
+		
+		int cant = 0;
+		Iterator<Node> it = this.getAdjacentsIterator(i); // O(1)
+		while (it.hasNext()) { // O(A)
+			cant++;
+		}
+		
+		return cant;
+	}
 
 }

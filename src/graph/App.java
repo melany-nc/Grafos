@@ -4,9 +4,11 @@ import java.util.Iterator;
 import graph.coloring.Coloring;
 import graph.coloring.ColoringFirstColor;
 import graph.coloring.ColoringMethod;
+import graph.coloring.order.MatulaOrder;
 import graph.coloring.order.Order;
 import graph.coloring.order.OrderMethod;
 import graph.coloring.order.RandomOrder;
+import graph.coloring.order.WelshPowell;
 
 public class App {
 
@@ -94,7 +96,7 @@ public class App {
 //		System.out.println(p3.prim());
 		
 		
-		OrderMethod orderMethod = new RandomOrder();
+		OrderMethod orderMethod = new WelshPowell();
 		Order order = orderMethod.generateOrder(p3);
 		ColoringMethod coloringMethod = new ColoringFirstColor();
 		
