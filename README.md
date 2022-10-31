@@ -13,6 +13,8 @@ Grafos implementados con Listas
 # Algoritmos a implementar
 
 ☺ Prim
+☺ Kruskal
+
+KLSMADNSLJA
 ☺ Kruskalçç
 
-askldmaoijdoaijdia
