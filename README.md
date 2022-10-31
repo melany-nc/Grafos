@@ -16,3 +16,5 @@ Grafos implementados con Listas
 ☺ Kruskal
 
 KLSMADNSLJA
+☺ Kruskalçç
+
